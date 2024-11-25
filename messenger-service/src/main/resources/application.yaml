@@ -1,0 +1,11 @@
+spring:
+  application:
+   name: messenger-service
+  config:
+    import: "optional:configserver:http://localhost:8088"
+
+
+
+
+
+

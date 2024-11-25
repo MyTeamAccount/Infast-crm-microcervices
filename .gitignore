@@ -1,0 +1,18 @@
+# IDE fayllari
+.idea/
+*.iml
+
+# Build papkalari
+target/
+build/
+out/
+
+# OS fayllari
+.DS_Store
+Thumbs.db
+
+# Loglar
+*.log
+
+# Maven wrapper fayllari
+.mvn/
