@@ -3,3 +3,17 @@ spring:
     name: file-service
   config:
     import: "optional:configserver:http://localhost:8088"
+  servlet:
+    multipart:
+      enabled: true
+      max-request-size: 215MB
+      max-file-size: 200MB
+      file-size-threshold: 2KB
+
+
+server:
+  base-url : https://localhost:8060/v1/file-storage
+
+photo:
+  upload:
+    path  : src/main/resources/photo-uploads

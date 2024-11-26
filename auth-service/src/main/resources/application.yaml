@@ -3,3 +3,5 @@ spring:
     name: auth-service
   config:
     import: "optional:configserver:http://localhost:8088"
+
+application-title: Auth Service
