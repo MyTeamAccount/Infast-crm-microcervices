@@ -1,11 +1,14 @@
 package com.example.project_service.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "projects")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Type {
 
     @Id

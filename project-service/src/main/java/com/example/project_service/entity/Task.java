@@ -3,15 +3,18 @@ package com.example.project_service.entity;
 import com.example.project_service.entity.enums.Priority;
 import com.example.project_service.entity.enums.TaskStatus;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.Duration;
 import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-@Table(name = "tasks")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Task {
 
     @Id

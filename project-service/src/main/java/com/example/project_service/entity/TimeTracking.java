@@ -1,14 +1,17 @@
 package com.example.project_service.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "time_tracking")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class TimeTracking {
 
     @Id
