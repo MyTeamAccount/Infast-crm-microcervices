@@ -1,7 +1,9 @@
 package com.example.project_service.entity;
 
+import com.example.project_service.dto.task.TaskCreateDTO;
 import com.example.project_service.entity.enums.Priority;
 import com.example.project_service.entity.enums.TaskStatus;
+import com.example.project_service.exeption.ApiException;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -59,4 +61,18 @@ public class Task {
 
     @ElementCollection
     private List<String> filePathList;
+
+    public Task(TaskCreateDTO taskCreateDTO){
+        if (taskCreateDTO==null){
+            return;
+        }
+        this.name=taskCreateDTO.getName();
+        this.description=taskCreateDTO.getDescription();
+        this.estimatedTime=taskCreateDTO.getEstimate();
+        this.deadline=taskCreateDTO.getDeadline();
+        this.priority=taskCreateDTO.getPriority();
+        this.assignee_id=taskCreateDTO.getAssigneeId();
+
+    }
+
 }

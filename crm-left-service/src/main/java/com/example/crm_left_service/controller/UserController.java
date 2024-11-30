@@ -1,5 +1,6 @@
 package com.example.crm_left_service.controller;
 
+import com.example.crm_left_service.entity.User;
 import com.example.crm_left_service.payload.user.dto.AuthUserDto;
 import com.example.crm_left_service.payload.user.dto.UserDto;
 import com.example.crm_left_service.request.RegisterRequest;
@@ -38,6 +39,9 @@ public class UserController {
     public ResponseEntity<UserDto> getUserById(@PathVariable Long id) {
         return ResponseEntity.ok(modelMapper.map(userService.getUserById(id), UserDto.class));
     }
+
+
+
 
     @GetMapping("/getUserByEmail/{email}")
     public ResponseEntity<UserDto> getUserByEmail(@PathVariable String email) {

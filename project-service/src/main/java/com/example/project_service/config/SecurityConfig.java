@@ -7,8 +7,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.lang.NonNull;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -19,17 +26,30 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
-//    @Bean
-//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//        return http.csrf().disable()
-//                .authorizeRequests()
-//                .anyRequest().permitAll()
-//                .and()
-//                .formLogin().disable()
-//                .httpBasic().disable()
-//                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-//                .build();
-//    }
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception
+    {
+        http
+                .csrf(AbstractHttpConfigurer::disable)
+                .cors(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(authorizationRequest ->
+                        authorizationRequest
+                                .requestMatchers(
+//                                        "/**"
+                                        getMatchers()
+                                )
+                                .permitAll()
+                                .anyRequest().authenticated())
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+               // .userDetailsService(authService)
+               // .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+               // .exceptionHandling(customizer ->
+                      //  customizer
+                              //  .accessDeniedHandler(accessDeniedHandler)
+                                //.authenticationEntryPoint(entryPoint));
+        return http.build();
+    }
+
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
@@ -50,5 +70,32 @@ public class SecurityConfig {
                         .allowedMethods("*");
             }
         };
+    }
+
+    private RequestMatcher[] getMatchers()
+    {
+        return new RequestMatcher[]///v1 v1
+                {
+                        //Auth
+                        new AntPathRequestMatcher("/api/auth/login", "POST"),
+                        //All-GET
+                        new AntPathRequestMatcher("/api/**", "GET"),
+                        //Application
+                        new AntPathRequestMatcher("/api/application/consultation", "POST"),
+                        new AntPathRequestMatcher("/api/application/question", "POST"),
+                        //Telegram-bot
+                        new AntPathRequestMatcher("/api/bot/**", "POST"),
+                        //Counter
+                        new AntPathRequestMatcher("/api/count/**", "POST"),
+                        //Error
+                        new AntPathRequestMatcher("/error"),
+                        //Swagger
+                        new AntPathRequestMatcher("/api/swagger-ui/**"),
+                        new AntPathRequestMatcher("/swagger-ui/**"),
+                        new AntPathRequestMatcher("/v3/api-docs/**"),
+                        new AntPathRequestMatcher("/webjars/**"),
+                        new AntPathRequestMatcher("/swagger-resources/**"),
+                        new AntPathRequestMatcher("/configuration/**"),
+                };
     }
 }
