@@ -6,7 +6,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/project_service
     username: postgres
-    password: 1234
+    password: root123
     driver-class-name: org.postgresql.Driver
   servlet:
     multipart:
@@ -23,5 +23,27 @@ server:
   port: 8060
 
 
+
+application-title: Project Service
+application-description: Project Left Service API Documentation
+application-version: 1.0.0
+application-license: Apache 2.0
+
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+
 springdoc:
-  application-title: Project Service API
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html

@@ -12,7 +12,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/file_service
     username: postgres
-    password: 1234
+    password: root123
     driver-class-name: org.postgresql.Driver
   jpa:
     show-sql: true
@@ -22,7 +22,18 @@ spring:
 
 server:
   base-url : https://localhost:8060/v1/file-storage
+  port: 8082
 
 photo:
   upload:
     path  : src/main/resources/photo-uploads
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0

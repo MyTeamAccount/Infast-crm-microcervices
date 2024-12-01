@@ -12,25 +12,22 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class OpenApiConfig {
-//    @Bean
-//    public OpenAPI openAPI(@Value("${application-title}") String title,
-//                           @Value("${application-description}") String description,
-//                           @Value("${application-version}") String version,
-//                           @Value("${application-license}") String license) {
-//        return new OpenAPI().addSecurityItem(new SecurityRequirement()
-//                        .addList("Bearer Authentication"))
-//                .components(new Components().addSecuritySchemes
-//                        ("Bearer Authentication", createAPIKeyScheme()))
-//                .info(new Info()
-//                        .title(title)
-//                        .description(description)
-//                        .version(version)
-//                        .license(new License().name(license)));
-//    }
+    @Bean
+    public OpenAPI customOpenAPI() {
+        return new OpenAPI()
+                .components(new Components().addSecuritySchemes("Bearer Authentication", createAPIKeyScheme()))
+                .addSecurityItem(new SecurityRequirement().addList("Bearer Authentication"))
+                .info(new Info()
+                        .title("Auth Service API")
+                        .description("API documentation for the Auth Service")
+                        .version("1.0.0")
+                        .license(new License().name("Apache 2.0").url("http://springdoc.org")));
+    }
 
     private SecurityScheme createAPIKeyScheme() {
-        return new SecurityScheme().type(SecurityScheme.Type.HTTP)
-                .bearerFormat("JWT")
-                .scheme("bearer");
+        return new SecurityScheme()
+                .type(SecurityScheme.Type.HTTP)
+                .scheme("bearer")
+                .bearerFormat("JWT");
     }
 }
