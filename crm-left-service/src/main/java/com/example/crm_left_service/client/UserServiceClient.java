@@ -1,6 +1,8 @@
 package com.example.crm_left_service.client;
 
+import com.example.crm_left_service.payload.user.dto.UserDto;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
