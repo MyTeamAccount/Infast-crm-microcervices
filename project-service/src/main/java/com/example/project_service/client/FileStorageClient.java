@@ -12,8 +12,8 @@ import org.springframework.web.multipart.MultipartFile;
 @FeignClient(name = "file-service", path = "/v1/file-storage")
 public interface FileStorageClient {
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    ResponseEntity<String> uploadImageToFIleSystem(@RequestPart("image") MultipartFile file);
+    ResponseEntity<String> uploadAttachmentToFIleSystem(@RequestPart("attachment") MultipartFile file);
 
     @DeleteMapping("/delete/{id}")
-    ResponseEntity<Void> deleteImageFromFileSystem(@PathVariable String id);
+    ResponseEntity<Void> deleteAttachmentFromFileSystem(@PathVariable String id);
 }

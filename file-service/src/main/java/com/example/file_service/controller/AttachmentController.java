@@ -1,7 +1,9 @@
 package com.example.file_service.controller;
 
 
+import com.example.file_service.entity.Attachment;
 import com.example.file_service.payload.AttachmentDto;
+import com.example.file_service.payload.ResponseMessage;
 import com.example.file_service.service.AttachmentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -51,6 +53,12 @@ public class AttachmentController
         return attachmentService.findByName(name);
     }
 
+
+    @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    ResponseEntity<String> uploadAttachmentToFIleSystem(@RequestPart("attachment") MultipartFile file){
+        Attachment save = attachmentService.save(file);
+        return ResponseEntity.status(201).body(save.getUrl());
+    }
 
 
 
@@ -102,5 +110,14 @@ public class AttachmentController
     {
         return ResponseEntity.status(200).body(attachmentService.delete(id));
     }
+
+
+    @DeleteMapping("/delete/{id}")
+    ResponseEntity<Void> deleteAttachmentFromFileSystem(@PathVariable String id){
+        ResponseMessage delete = attachmentService.delete(id);
+        return ResponseEntity.status(delete.getStatus()?200:400).build();
+    }
+
+
 }
 
