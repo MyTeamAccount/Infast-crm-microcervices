@@ -51,7 +51,7 @@ public class AttachmentService
                 file.getContentType().equals("video/mp4") || // MP4 video
                 file.getContentType().equals("video/x-matroska") ))// video/quicktime mov uchun MIME turi
         {
-            throw new RuntimeException("Unsupported image or video type: " + file.getContentType());
+            throw new RuntimeException("Unsupported attachment type: " + file.getContentType());
         }
 
 

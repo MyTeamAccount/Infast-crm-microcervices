@@ -32,9 +32,9 @@ public class TaskResponseDTO {
 
     Priority priority;
 
-    Duration estimatedTime;
+    String estimatedTime;
 
-    Duration spentTime;
+    String spentTime;
 
     LocalDate deadline;
 

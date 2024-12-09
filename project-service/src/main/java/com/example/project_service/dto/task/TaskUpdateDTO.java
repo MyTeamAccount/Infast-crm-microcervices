@@ -1,27 +1,32 @@
 package com.example.project_service.dto.task;
 
+import com.example.project_service.entity.Project;
 import com.example.project_service.entity.Type;
 import com.example.project_service.entity.enums.Priority;
+import com.example.project_service.entity.enums.TaskStatus;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.time.Duration;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class TaskCreateDTO {
+public class TaskUpdateDTO {
+
+    private Long id;
 
     private String name;
-    private Long group_id;
-    private String estimate;
-    private LocalDate deadline;
-    private Priority priority;
-    private Long assigneeId;
+
     private String description;
-    private Long project_id;
+
+    private String estimatedTime;
+
+    private String spentTime;
+
+    private LocalDate deadline;
 }

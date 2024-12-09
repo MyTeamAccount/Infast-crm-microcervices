@@ -16,6 +16,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -50,6 +52,18 @@ public class SecurityConfig {
         return http.build();
     }
 
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .csrf((d)-> d.disable())
+                .authorizeHttpRequests(auth -> auth
+                          .requestMatchers("/swagger-resources/**", "/swagger-ui.html/**", "/v3/api-docs/**").permitAll()  // Swagger resurslariga ruxsat berish
+                .anyRequest().authenticated());
+
+
+        return http.build();  // Return the configured SecurityFilterChain
+    }
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {

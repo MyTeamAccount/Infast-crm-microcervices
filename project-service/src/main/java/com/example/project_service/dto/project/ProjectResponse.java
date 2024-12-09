@@ -40,20 +40,23 @@ public class ProjectResponse {
 
     List<String> filePathList;
 
-    public ProjectResponse(Project project){
-        this.id=project.getId();
-        this.name=project.getName();
-        this.projectNumber=project.getProjectNumber();
-        this.startDate=project.getStartDate();
-        this.deadline=project.getDeadline();
-        this.priority= String.valueOf(project.getPriority());
-        this.description=project.getDescription();
-        this.createdDate=project.getCreatedAt();
+    public ProjectResponse(Project project) {
+        this.id = project.getId();
+        this.name = project.getName();
+        this.projectNumber = project.getProjectNumber();
+        this.startDate = project.getStartDate();
+        this.deadline = project.getDeadline();
+        this.priority = String.valueOf(project.getPriority());
+        this.description = project.getDescription();
+        this.createdDate = project.getCreatedAt();
+        this.photoPath = project.getPhotoPath();
 
-       if (project.getUrl()!=null){
-           this.url=project.getUrl();
-       }
-
+        if (project.getUrl() != null) {
+            this.url = project.getUrl();
+        }
+        if (project.getFilePathList() != null) {
+            this.filePathList = project.getFilePathList();
+        }
 
     }
 }

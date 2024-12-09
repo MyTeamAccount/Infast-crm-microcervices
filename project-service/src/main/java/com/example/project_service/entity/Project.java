@@ -3,6 +3,7 @@ package com.example.project_service.entity;
 import com.example.project_service.dto.project.ProjectCreateDTO;
 import com.example.project_service.entity.enums.Priority;
 import com.example.project_service.exeption.ApiException;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,13 +17,13 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Project {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
     private String name;
 
     private String projectNumber;
@@ -38,9 +39,6 @@ public class Project {
 
     @Enumerated(EnumType.STRING)
     private Priority priority;
-
-    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Task> tasks;
 
     @Column(nullable = false, updatable = false)
     private LocalDate createdAt;

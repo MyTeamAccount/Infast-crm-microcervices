@@ -16,34 +16,34 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableFeignClients
 public class CrmLeftServiceApplication implements CommandLineRunner {
 
-	private final UserRepository userRepository;
-	private final UserRoleRepository userRoleRepository;
-	private final PasswordEncoder passwordEncoder;
+//	private final UserRepository userRepository;
+//	private final UserRoleRepository userRoleRepository;
+//	private final PasswordEncoder passwordEncoder;
 
 	public static void main(String[] args) {
 		SpringApplication.run(CrmLeftServiceApplication.class, args);
 	}
 
-	public CrmLeftServiceApplication(UserRepository userRepository, UserRoleRepository userRoleRepository,PasswordEncoder passwordEncoder) {
-		this.userRepository = userRepository;
-		this.userRoleRepository = userRoleRepository;
-		this.passwordEncoder = passwordEncoder;
-	}
+//	public CrmLeftServiceApplication(UserRepository userRepository, UserRoleRepository userRoleRepository,PasswordEncoder passwordEncoder) {
+//		this.userRepository = userRepository;
+//		this.userRoleRepository = userRoleRepository;
+//		this.passwordEncoder = passwordEncoder;
+//	}
 
 	@Override
 	public void run(String... args) {
-		if (userRoleRepository.findByName("ADMIN").isEmpty()) {
-			UserRole userRole = new UserRole();
-			userRole.setName("ADMIN");
-			userRoleRepository.save(userRole);
-
-			final String pass = passwordEncoder.encode("admin=x+x=2x");
-			var admin = User.builder()
-					.email("admin@gmail.com")
-					.password(pass)
-					.userRole(userRole).build();
-			if (userRepository.findByEmail("admin@gmail.com").isEmpty()) userRepository.save(admin);
-		}
+//		if (userRoleRepository.findByName("ADMIN").isEmpty()) {
+//			UserRole userRole = new UserRole();
+//			userRole.setName("ADMIN");
+//			userRoleRepository.save(userRole);
+//
+//			final String pass = passwordEncoder.encode("admin=x+x=2x");
+//			var admin = User.builder()
+//					.email("admin@gmail.com")
+//					.password(pass)
+//					.userRole(userRole).build();
+//			if (userRepository.findByEmail("admin@gmail.com").isEmpty()) userRepository.save(admin);
+//		}
 	}
 
 }

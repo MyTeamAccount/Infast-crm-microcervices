@@ -1,15 +1,14 @@
 package com.example.project_service.controller;
 
+import com.example.project_service.constants.SwaggerConstants;
 import com.example.project_service.dto.ApiResponse;
-import com.example.project_service.dto.project.ApiLisProjectDTO;
-import com.example.project_service.dto.project.ApiResponseWithProjectDTO;
-import com.example.project_service.dto.project.ProjectCreateDTO;
-import com.example.project_service.dto.project.ProjectResponse;
+import com.example.project_service.dto.project.*;
 import com.example.project_service.entity.Project;
 import com.example.project_service.service.ProjectService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
@@ -80,11 +79,11 @@ public class ProjectController {
                                 Url to be assigned for the project.
                             """,
                     required = true,
-                    content = @Content(mediaType = "multipart/form-data",
+                    content = @Content(mediaType = "string",
                             schema = @Schema(type = "array")
                     )
             )
-            @RequestPart(value = "urls") List<String> url,
+            @RequestParam List<String> url,
             @PathVariable Long id
     ) {
         return projectService.putURL(id, url);
@@ -160,6 +159,79 @@ public class ProjectController {
     })
     public ResponseEntity<ApiResponse<?>> findAll() {
         return projectService.getAll();
+    }
+
+
+
+
+    @DeleteMapping("/delete/{id}")
+    @Operation(summary = "This API used to delete a project  by its ID .")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "200",
+                    description = "Successfully deleted the project .",
+                    content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = ApiResponse.class))
+                    }
+            ),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "project not found if the partner ID doesn't exist .", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ApiResponse.class))}),
+    })
+    public ResponseEntity<ApiResponse<?>> deleteTask(
+            @Parameter(
+                    name = "id",
+                    description = "ID of the project to be deleted ",
+                    required = true)
+            @PathVariable Long id
+    )
+    {
+        return projectService.delete(id);
+    }
+
+
+
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "200",
+                    description = "You get 200 status code when data succesfully edited ",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponseWithProjectDTO.class)
+                    )),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "400",
+                    description = "If get 400 Please READ RESPONSE MESSAGE!!! ",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class)
+                    ))
+    })
+    @Operation(summary = "Update and edit project")
+    @PutMapping
+    public ResponseEntity<ApiResponse<ProjectResponse>> update(
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    required = true,
+                    description = SwaggerConstants.UPDATE_DESCRIPTION,
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ProjectUpdateDTO.class),
+                            examples = {
+                                    @ExampleObject(
+                                            name = "Edit All fields ",
+                                            description = "Edit All fields at the same time ",
+                                            value = SwaggerConstants.PROJECT_FULL_FORM
+                                    ),
+                                    @ExampleObject(
+                                            name = "Edit custom field ",
+                                            description = "Send field which you want ",
+                                            value = SwaggerConstants.CUSTOM_FIELD
+                                    )
+                            }
+                    )
+            )
+            @RequestBody ProjectUpdateDTO newDTO) {
+
+        return projectService.update(newDTO);
+
     }
 
 }

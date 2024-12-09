@@ -12,3 +12,4 @@ management:
   tracking:
     sampling:
       probability: 1.0
+

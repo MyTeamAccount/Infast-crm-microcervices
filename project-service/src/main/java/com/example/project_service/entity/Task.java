@@ -4,6 +4,7 @@ import com.example.project_service.dto.task.TaskCreateDTO;
 import com.example.project_service.entity.enums.Priority;
 import com.example.project_service.entity.enums.TaskStatus;
 import com.example.project_service.exeption.ApiException;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -40,9 +41,9 @@ public class Task {
     private Priority priority;
 
     @Column(nullable = false)
-    private Duration estimatedTime;
+    private String estimatedTime;
 
-    private Duration spentTime;
+    private String spentTime;
 
     @Column(nullable = false)
     private LocalDate deadline;
