@@ -44,7 +44,7 @@ public class UserDetails{
     private  String skype;
 
     @OneToMany(mappedBy = "user")
-    private List<Vocation> vocations;
+    private List<Vacation> vacations;
 
     private String photoPath;
 
